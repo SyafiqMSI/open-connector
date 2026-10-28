@@ -3,7 +3,7 @@ import type { OAuthProviderContext, ProviderRuntimeHandler } from "../provider-e
 
 import { randomUUID } from "node:crypto";
 import { compactObject, optionalBoolean, optionalInteger, optionalString, rawStringOrNull } from "../../core/cast.ts";
-import { assertPublicHttpUrl, readBoundedResponseBytes, storeResponseInTransit } from "../../core/request.ts";
+import { assertPublicHttpUrl, isPrivateNetworkAccessAllowed, readBoundedResponseBytes, storeResponseInTransit } from "../../core/request.ts";
 import { googleJsonRequest, googleRequest } from "../googledrive/runtime-request.ts";
 import { providerUserAgent, ProviderRequestError } from "../provider-runtime.ts";
 
@@ -905,7 +905,7 @@ async function resolveStreamingUploadSource(input: {
 
 async function fetchUploadSource(url: string, context: YoutubeActionContext): Promise<Response> {
   assertPublicHttpUrl(url, {
-    fieldName: "upload source URL",
+    fieldName: "upload source URL", allowPrivateNetwork: isPrivateNetworkAccessAllowed(),
     createError: (message) => new ProviderRequestError(400, message),
   });
   const response = await context.fetcher(url, {
