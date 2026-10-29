@@ -17,7 +17,7 @@ const publicNetworkPolicy: ProviderNetworkPolicy = Object.freeze({});
 
 /** The active runtime's policy, or public-only access outside a runtime. */
 export function getProviderNetworkPolicy(): ProviderNetworkPolicy {
-  return scopes.getStore() ?? (process.env.OOMOL_CONNECT_ALLOW_PRIVATE_NETWORK === "true" ? { allowPrivateNetwork: true } : publicNetworkPolicy);
+  return scopes.getStore() ?? publicNetworkPolicy;
 }
 
 /** Bind policy to asynchronous work, including provider callbacks and non-HTTP transports. */

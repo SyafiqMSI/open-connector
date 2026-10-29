@@ -250,7 +250,7 @@ export function createGuardedFetch(options: GuardedFetchOptions = {}): typeof fe
     const allowPrivateNetwork =
       typeof options.allowPrivateNetwork === "function"
         ? options.allowPrivateNetwork()
-        : options.allowPrivateNetwork ?? process.env.OOMOL_CONNECT_ALLOW_PRIVATE_NETWORK === "true";
+        : options.allowPrivateNetwork === true;
     const lookup = options.skipDnsValidation
       ? null
       : options.lookup === undefined
